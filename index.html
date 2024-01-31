@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vCard QR Code Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1/qrcode.min.js"></script>
+</head>
+<body>
+    <h2>vCard QR Code Generator</h2>
+    <div>
+        <label>First Name: </label>
+        <input type="text" id="firstName"><br>
+        <label>Family Name: </label>
+        <input type="text" id="familyName"><br>
+        <label>Title: </label>
+        <input type="text" id="title"><br>
+        <label>Company: </label>
+        <input type="text" id="company"><br>
+        <label>Email Address: </label>
+        <input type="text" id="email"><br>
+        <label>Mobile Phone: </label>
+        <input type="text" id="phone"><br>
+        <button onclick="generateQRCode()">Generate QR Code</button>
+    </div>
+    <div id="qrcode" style="margin-top: 15px;"></div>
+
+    <script>
+        function generateQRCode() {
+            var firstName = document.getElementById("firstName").value;
+            var familyName = document.getElementById("familyName").value;
+            var title = document.getElementById("title").value;
+            var company = document.getElementById("company").value;
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("phone").value;
+
+            var vCardData = 
+                "BEGIN:VCARD\n" +
+                "VERSION:3.0\n" +
+                "N:" + familyName + ";" + firstName + ";;;\n" +
+                "FN:" + firstName + " " + familyName + "\n" +
+                "ORG:" + company + "\n" +
+                "TITLE:" + title + "\n" +
+                "TEL;TYPE=CELL:" + phone + "\n" +
+                "EMAIL;TYPE=PREF,INTERNET:" + email + "\n" +
+                "END:VCARD";
+
+            var qrcodeContainer = document.getElementById("qrcode");
+            qrcodeContainer.innerHTML = "";
+            new QRCode(qrcodeContainer, {
+                text: vCardData,
+                width: 500,
+                height: 500
+            });
+        }
+    </script>
+</body>
+</html>
